@@ -3,7 +3,7 @@
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: linear-gradient(90deg, #6a11cb, #2575fc); /* グラデーション */
+  background: linear-gradient(90deg, #6a11cb, #2575fc) !important; /* グラデーション */
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   padding: 0.8rem 0;
 }
@@ -64,4 +64,9 @@
     flex-direction: column;
     gap: 0.5rem;
   }
+}
+
+body {
+  background: linear-gradient(180deg, #f0f4ff, #ffffff);
+  min-height: 100vh;
 }
