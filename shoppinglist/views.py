@@ -6,10 +6,14 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import get_object_or_404
 
+from django.views.generic import TemplateView
+
+
 from .forms import ItemBuy, ItemIDForm, ItemForm, ItemIdForm
 from django.views.generic.base import TemplateView
 
 from django.views.generic.edit import CreateView
+
 
 # Create your views here.
 
@@ -28,6 +32,25 @@ class ItemList(ListView):
         context =  super().get_context_data(**kwargs)
         context['form'] = ItemBuy()
         return context
+
+    
+class ItemShowView(TemplateView):
+    model = Item
+    template_name = 'shoppinglist/item_show.html'
+    
+    def post(self, request, *args, **kwargs):
+        item_id = self.request.POST.get('item_id')
+        item = Item.objects.get(pk=item_id)
+        context = super().get_context_data(**kwargs)
+        context['form_id'] = ItemIdForm()
+        context['item'] = item
+        return self.render_to_response(context)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form_id'] = ItemIdForm()
+        return context
+
 
 
 class ItemEditView(TemplateView):
@@ -72,4 +95,5 @@ class ItemAddview(CreateView):
     fields = {'name', 'item_url', 'count', 'buy_date', 'shop'}
     template_name = 'shoppinglist/item_add.html'
     success_url = reverse_lazy('shoppinglist:list')
+
 
