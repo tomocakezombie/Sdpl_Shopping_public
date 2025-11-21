@@ -5,7 +5,8 @@ from .models import Item
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.shortcuts import get_object_or_404
-from .forms import ItemBuy
+from .forms import ItemBuy, ItemIdForm
+from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView
 
 # Create your views here.
@@ -26,6 +27,20 @@ class ItemList(ListView):
         context['form'] = ItemBuy()
         return context
     
+class ItemDeleteView(TemplateView):
+    model = Itemtemplate_name = 'shoppingList/item_delete.html'
+    
+    def post(self, request, *args, **kwargs):
+        item_id = self.request.POST.get('item_id')
+        item = get_object_or_404(Item, pk=item_id)
+        item.delete()
+        return HttpResponseRedirect(reverse('shoppingList:List'))
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = ItemIdForm()
+        return context
+      
 class ItemAddview(CreateView):
     model = Item
     fields = {'name', 'item_url', 'count', 'buy_date', 'shop'}
