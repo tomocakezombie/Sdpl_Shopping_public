@@ -3,9 +3,12 @@ from django.shortcuts import render
 from django.views.generic import ListView
 from .models import Item
 from django.http import HttpResponseRedirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.shortcuts import get_object_or_404
-from .forms import ItemBuy, ItemIDForm, ItemForm
+
+from .forms import ItemBuy, ItemIDForm, ItemForm, ItemIdForm
+from django.views.generic.base import TemplateView
+
 from django.views.generic.edit import CreateView
 
 # Create your views here.
@@ -25,6 +28,7 @@ class ItemList(ListView):
         context =  super().get_context_data(**kwargs)
         context['form'] = ItemBuy()
         return context
+
 
 class ItemEditView(TemplateView):
     model =Itemtemplete_name ='dhoppinglist/item_edit.html'
@@ -47,3 +51,25 @@ class ItemEditView(TemplateView):
         context['form_id'] = ItemIDForm()
         context['form'] = ItemForm()
         return context
+
+    
+class ItemDeleteView(TemplateView):
+    model = Itemtemplate_name = 'shoppingList/item_delete.html'
+    
+    def post(self, request, *args, **kwargs):
+        item_id = self.request.POST.get('item_id')
+        item = get_object_or_404(Item, pk=item_id)
+        item.delete()
+        return HttpResponseRedirect(reverse('shoppingList:List'))
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = ItemIdForm()
+        return context
+      
+class ItemAddview(CreateView):
+    model = Item
+    fields = {'name', 'item_url', 'count', 'buy_date', 'shop'}
+    template_name = 'shoppinglist/item_add.html'
+    success_url = reverse_lazy('shoppinglist:list')
+
