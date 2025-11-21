@@ -30,4 +30,10 @@
         {% endfor %}
     <tbody>
 </table>
+<ul>
+<li><a href="{% url 'shoppinglist:add' %}">追加</a></li>
+{% comment %} <li><a href="{% url 'shoppinglist:show' %}">表示</a></li>
+<li><a href="{% url 'shoppinglist:edit' %}">変更</a></li>
+<li><a href="{% url 'shoppinglist:delete' %}">削除</a></li> {% endcomment %}
+</ul>
 {% endblock %}
