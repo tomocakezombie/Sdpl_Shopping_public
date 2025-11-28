@@ -12,7 +12,7 @@ from django.shortcuts import get_object_or_404
 from .forms import ItemBuy, ItemForm, ItemIdForm
 from django.views.generic.base import TemplateView
 
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, DeleteView
 from django.views.generic.edit import UpdateView#T23CS044課題（改善ポイント2で使用）
 
 
@@ -82,20 +82,24 @@ class ItemEditView(UpdateView):#T23CS044課題（改善ポイント2）
 #         return context
 
     
-class ItemDeleteView(TemplateView):
+# class ItemDeleteView(TemplateView):
+#     model = Item
+#     template_name = 'shoppinglist/item_delete.html'
+    
+#     def post(self, request, *args, **kwargs):
+#         item_id = self.request.POST.get('item_id')
+#         item = get_object_or_404(Item, pk=item_id)
+#         item.delete()
+#         return HttpResponseRedirect(reverse('shoppinglist:list'))
+    
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['form'] = ItemIdForm()
+#         return context
+class ItemDeleteView(DeleteView):
     model = Item
-    template_name = 'shoppingList/item_delete.html'
-    
-    def post(self, request, *args, **kwargs):
-        item_id = self.request.POST.get('item_id')
-        item = get_object_or_404(Item, pk=item_id)
-        item.delete()
-        return HttpResponseRedirect(reverse('shoppingList:List'))
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['form'] = ItemIdForm()
-        return context
+    template_name = 'shoppinglist/item_delete.html'
+    success_url = reverse_lazy('shoppinglist:list') 
       
 class ItemAddview(CreateView):
     model = Item

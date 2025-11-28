@@ -3,8 +3,9 @@
 {% block title %} Delete {% endblock %}
 
 {% block main %}
-<form action="{% url 'shoppingList:delete' %}" method="post">
+<form action="{% url 'shoppinglist:delete' pk=item.id %}" method="post"> 
 {% csrf_token %}
+<p> {{item.id}} {{item.name}} を削除しますか？ </p>
 {{ form }}
 <input type="submit"/>
 </form>
