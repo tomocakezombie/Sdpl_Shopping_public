@@ -83,7 +83,8 @@ class ItemEditView(UpdateView):#T23CS044課題（改善ポイント2）
 
     
 class ItemDeleteView(TemplateView):
-    model = Itemtemplate_name = 'shoppingList/item_delete.html'
+    model = Item
+    template_name = 'shoppingList/item_delete.html'
     
     def post(self, request, *args, **kwargs):
         item_id = self.request.POST.get('item_id')
