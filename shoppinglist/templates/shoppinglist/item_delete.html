@@ -1,11 +1,24 @@
 {% extends "base.html" %}
 
-{% block title %} Delete {% endblock %}
+{% block title %}Delete{% endblock %}
 
 {% block main %}
-<form action="{% url 'shoppingList:delete' %}" method="post">
-{% csrf_token %}
-{{ form }}
-<input type="submit"/>
+
+<h2>削除確認</h2>
+
+<p>以下の内容を本当に削除しますか？</p>
+
+<div style="border: 1px solid #ddd; padding: 15px; margin-bottom: 20px;">
+    <p>ID: {{ object.id }}</p>
+    <p>名前: {{ object.name }}</p>
+    <p>個数: {{ object.count }}</p>
+    <p>期日: {{ object.buy_date }}</p>
+</div>
+
+<form action="" method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">削除する</button>
+    <a href="{% url 'shoppinglist:list' %}" class="btn btn-secondary">キャンセル</a>
 </form>
+
 {% endblock %}
