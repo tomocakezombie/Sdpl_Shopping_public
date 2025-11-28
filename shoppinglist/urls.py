@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import ItemList, ItemEditView, ItemDeleteView, ItemShowView
+from .views import ItemList, ItemEditView, ItemDeleteView
 from .views import ItemAddview #ItemShowView, ItemEditView, ItemDeleteView
 
 
