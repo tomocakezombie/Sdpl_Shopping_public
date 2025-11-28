@@ -1,10 +1,12 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, TemplateView, CreateView, DeleteView
 from django.urls import reverse, reverse_lazy
+
 from django.http import HttpResponseRedirect
 
 from .models import Item
 from .forms import ItemBuy, ItemForm, ItemIdForm
+
 
 
 class ItemList(ListView):
@@ -26,6 +28,7 @@ class ItemList(ListView):
 
 
 
+
 class ItemEditView(TemplateView):
     template_name = "shoppinglist/item_edit.html"
 
@@ -40,9 +43,11 @@ class ItemEditView(TemplateView):
 
         return HttpResponseRedirect(reverse('shoppinglist:list'))
 
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form_id'] = ItemIdForm()
+
         context['form'] = ItemForm()
         return context
 
@@ -53,6 +58,7 @@ class ItemDeleteView(DeleteView):
     template_name = "shoppinglist/item_delete.html"
     success_url = reverse_lazy("shoppinglist:list")
 
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form_id'] = ItemIdForm()
@@ -62,6 +68,8 @@ class ItemDeleteView(DeleteView):
 
 class ItemAddview(CreateView):
     model = Item
+
     fields = ['name', 'item_url', 'count', 'buy_date', 'shop']
     template_name = "shoppinglist/item_add.html"
     success_url = reverse_lazy("shoppinglist:list")
+
