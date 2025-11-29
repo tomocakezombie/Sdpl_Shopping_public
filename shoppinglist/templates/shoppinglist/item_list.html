@@ -9,13 +9,23 @@
 {{ form }}
 <input type="submit"/>
 </form>
+<form method="get" class="mb-3">
+    <label for="buy-filter">購入状態:</label>
+    <select name="buy" id="buy-filter">
+        {% for value, label in buy_filter_options %}
+            <option value="{{ value }}" {% if current_buy_filter == value %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+    </select>
+    <input type="hidden" name="sort" value="{{ current_sort }}">
+    <button type="submit">絞り込む</button>
+</form>
 <table class="table">
     <thead class="table-dark">
         <tr>
-            <th>#</th>
-            <th>名前</th>
-            <th>個数</th>
-            <th>期日</th>
+                    <th>#  <a href="{% url 'shoppinglist:list' %}?sort={{ sort_toggle.id }}{% if current_buy_filter != 'all' %}&buy={{ current_buy_filter }}{% endif %}">{% if current_sort == "-id" %}🔽{% elif current_sort == "id" %}🔼{% else %}↕️{% endif %}</a></th>
+                    <th>名前 <a href="{% url 'shoppinglist:list' %}?sort={{ sort_toggle.name }}{% if current_buy_filter != 'all' %}&buy={{ current_buy_filter }}{% endif %}">{% if current_sort == "-name" %}🔽{% elif current_sort == "name" %}🔼{% else %}↕️{% endif %}</a></th>
+                    <th>個数 <a href="{% url 'shoppinglist:list' %}?sort={{ sort_toggle.count }}{% if current_buy_filter != 'all' %}&buy={{ current_buy_filter }}{% endif %}">{% if current_sort == "-count" %}🔽{% elif current_sort == "count" %}🔼{% else %}↕️{% endif %}</a></th>
+                    <th>期日 <a href="{% url 'shoppinglist:list' %}?sort={{ sort_toggle.buy_date }}{% if current_buy_filter != 'all' %}&buy={{ current_buy_filter }}{% endif %}">{% if current_sort == "-buy_date" %}🔽{% elif current_sort == "buy_date" %}🔼{% else %}↕️{% endif %}</a></th>
             <th>購入済み?</th>
             <th>編集</th>
             <th>削除</th>
