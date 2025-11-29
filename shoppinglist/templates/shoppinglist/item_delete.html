@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %} Delete {% endblock %}
+{% block title %}Delete{% endblock %}
 
 {% block main %}
 <form action="{% url 'shoppinglist:delete' pk=item.id %}" method="post"> 
@@ -9,4 +9,5 @@
 {{ form }}
 <input type="submit"/>
 </form>
+
 {% endblock %}

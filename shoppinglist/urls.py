@@ -1,7 +1,6 @@
 from django.urls import path
 
-from .views import ItemList, ItemEditView, ItemDeleteView, ItemShowView
-from .views import ItemAddview #ItemShowView, ItemEditView, ItemDeleteView
+from .views import ItemList, ItemAddview, ItemEditView, ItemDeleteView , ItemShowView
 
 
 app_name='shoppinglist'
