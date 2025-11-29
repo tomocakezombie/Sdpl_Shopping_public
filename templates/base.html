@@ -5,47 +5,21 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block  title %}買い物リスト メインページ{% endblock %}</title>
-    {% comment %} <link rel="stylesheet" href ="{% static '/bootstrap-5.3.0-dist/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">  <!-- ← ここを追加 --> {% endcomment %}
     <link rel="stylesheet" href ="{% static '/bootstrap-5.3.0-dist/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static '/bootstrap-5.3.0-dist/css/style.css' %}">  <!-- ← ここを追加 -->
-
+    <link rel="stylesheet" href="{% static '/style.css' %}">
+    <link rel="stylesheet" href="{% static '/bootstrap-5.3.0-dist/css/style.css' %}"> 
 
 </head>
 <body>
-    <!-- ナビゲーションバー -->
     <nav class="navbar custom-navbar">
         <div class="container">
-            <a href="#" class="navbar-brand">🛒 MyPage</a>
-            <ul class="nav-links">
-                <li><a href="#">ホーム</a></li>
-                <li><a href="#">買い物リスト</a></li>
-                <li><a href="#">設定</a></li>
-            </ul>
+            <a href="." class="navbar-brand"> B-1 team shopping </a>
         </div>
     </nav>
-
-    <div class="container" style="margin-top: 100px;"> <!-- ← navbar固定分の余白 -->
+    <div class="container" style="margin-top: 100px;">
         {% block main %}
-            <div class="card-container">
-                <div class="card">
-                    <img src="{% static 'images/item1.jpg' %}" alt="商品1">
-                    <div class="card-body">
-                        <h5 class="card-title">商品名1</h5>
-                        <p class="card-text">説明テキスト</p>
-                        <button class="btn btn-primary">購入</button>
-                    </div>
-                </div>
-                <!-- カードを増やす -->
-            </div>
-        {% endblock %}
-        
+            <h2> メインコンテンツが読み込まれていません </h2>
+        {% endblock %}        
     </div>
-
-    <!-- <div class="moving-photo" style="background-image: url('{% static "image/ham1.png" %}'); animation-duration: 5s;"></div>
-    <div class="moving-photo" style="background-image: url('{% static "image/ham2.png" %}'); animation-duration: 20s;"></div>
-    <div class="moving-photo" style="background-image: url('{% static "image/ham3.png" %}'); animation-duration: 50s;"></div> -->
-
-
 </body>
 </html>
