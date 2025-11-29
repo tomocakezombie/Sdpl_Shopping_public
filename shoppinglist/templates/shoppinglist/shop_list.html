@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}ショップ一覧{% endblock %}
+
+{% block main %}
+<h2>登録ショップ</h2>
+{% if shops %}
+<table class="table">
+    <thead class="table-dark">
+        <tr>
+            <th>名前</th>
+            <th>サイト</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for shop in shops %}
+        <tr>
+            <td>{{ shop.name }}</td>
+            <td>
+                {% if shop.shop_site %}
+                <a href="{{ shop.shop_site }}" target="_blank" rel="noopener noreferrer">{{ shop.shop_site }}</a>
+                {% else %}
+                なし
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>登録済みのショップはありません。</p>
+{% endif %}
+<a href="{% url 'shoppinglist:shop_add' %}">ショップを追加する</a>
+{% endblock %}

@@ -125,3 +125,19 @@ class ShoppingListViewTests(TestCase):
 
         self.assertRedirects(response, reverse("shoppinglist:list"))
         self.assertTrue(Item.objects.filter(name="ほうれん草").exists())
+
+    def test_shop_view_requires_login(self):
+        url = reverse("shoppinglist:shop_list")
+        response = self.client.get(url)
+        self.assertRedirects(
+            response,
+            f"{reverse('accounts:login')}?next={url}",
+            fetch_redirect_response=False,
+        )
+
+    def test_shop_view_lists_shops(self):
+        self.client.login(account_id="tester", password="StrongPass123")
+        response = self.client.get(reverse("shoppinglist:shop_list"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "スーパーA")
