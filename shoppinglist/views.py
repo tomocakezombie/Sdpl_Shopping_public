@@ -1,15 +1,12 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
+from django.views import View
 from django.views.generic import ListView, TemplateView, CreateView, DeleteView
+from django.views.generic.edit import UpdateView  # T23CS044課題（改善ポイント2で使用）
 from django.urls import reverse, reverse_lazy
-
 from django.http import HttpResponseRedirect
 
 from .models import Item
 from .forms import ItemBuy, ItemForm, ItemIdForm
-from django.views.generic.base import TemplateView
-
-from django.views.generic.edit import CreateView, DeleteView
-from django.views.generic.edit import UpdateView #T23CS044課題（改善ポイント2で使用）
 
 
 
@@ -30,6 +27,15 @@ class ItemList(ListView):
         context =  super().get_context_data(**kwargs)
         context['form'] = ItemBuy()
         return context
+
+
+class ItemToggleBuyView(View):
+    def post(self, request, pk):
+        item = get_object_or_404(Item, pk=pk)
+        buy_value = request.POST.get("buy")
+        item.buy = (buy_value == "True")
+        item.save()
+        return redirect("shoppinglist:list")
 
     
 class ItemShowView(TemplateView):
@@ -60,7 +66,6 @@ class ItemDeleteView(DeleteView):
     model = Item
     template_name = 'shoppinglist/item_delete.html'
     success_url = reverse_lazy('shoppinglist:list') 
-
 
 class ItemAddview(CreateView):
     model = Item
