@@ -9,12 +9,14 @@
 {% endif %}
 {% endblock %}
 
-{% block content %}
-{% if user.is_authenticated %}
-<div class="h2">Welcome {{ user.first_name }} {{ user.last_name }}</div>
-{% else %}
 <h2>Welcome, guest!</h2>
 <p>This is team B-1 shopping site</p>
+
+{% block content %}
+{% if user.is_authenticated %}
+<p> Welcome <b>{{user.account_id}}</b> </p>
+<a href="{% url 'shoppinglist:list' %}" class="btn btn-primary">Go to Shopping List</a>
+{% else %}
 <p>Please sign up or login to start using the service.</p>
 <a href="{% url 'accounts:login' %}" class="btn btn-primary">Login</a>
 <a href="{% url 'accounts:signup' %}" class="btn btn-primary">Signup</a>
