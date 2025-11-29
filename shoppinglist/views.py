@@ -158,3 +158,12 @@ class ShopUrlView(TemplateView):
         shop = get_object_or_404(Shop, pk=shop_id)
         context['shop'] = shop
         return context
+    
+class ShopView(LoginRequiredMixin, TemplateView):
+    template_name = 'shoppinglist/shop_list.html'
+    login_url = reverse_lazy("accounts:login")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['shops'] = Shop.objects.order_by('name')
+        return context
