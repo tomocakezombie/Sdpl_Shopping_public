@@ -32,3 +32,6 @@ class LoginView(BaseLoginView):
 # LogoutViewを追加
 class LogoutView(BaseLogoutView):
     success_url = reverse_lazy("accounts:index")
+
+    def get(self, request, *args, **kwargs):
+        return self.post(request, *args, **kwargs)
