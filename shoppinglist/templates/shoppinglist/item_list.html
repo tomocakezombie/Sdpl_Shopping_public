@@ -22,14 +22,15 @@
 <table class="table">
     <thead class="table-dark">
         <tr>
-                    <th>#  <a href="{% url 'shoppinglist:list' %}?sort={{ sort_toggle.id }}{% if current_buy_filter != 'all' %}&buy={{ current_buy_filter }}{% endif %}">{% if current_sort == "-id" %}🔽{% elif current_sort == "id" %}🔼{% else %}↕️{% endif %}</a></th>
-                    <th>名前 <a href="{% url 'shoppinglist:list' %}?sort={{ sort_toggle.name }}{% if current_buy_filter != 'all' %}&buy={{ current_buy_filter }}{% endif %}">{% if current_sort == "-name" %}🔽{% elif current_sort == "name" %}🔼{% else %}↕️{% endif %}</a></th>
-                    <th>個数 <a href="{% url 'shoppinglist:list' %}?sort={{ sort_toggle.count }}{% if current_buy_filter != 'all' %}&buy={{ current_buy_filter }}{% endif %}">{% if current_sort == "-count" %}🔽{% elif current_sort == "count" %}🔼{% else %}↕️{% endif %}</a></th>
-                    <th>期日 <a href="{% url 'shoppinglist:list' %}?sort={{ sort_toggle.buy_date }}{% if current_buy_filter != 'all' %}&buy={{ current_buy_filter }}{% endif %}">{% if current_sort == "-buy_date" %}🔽{% elif current_sort == "buy_date" %}🔼{% else %}↕️{% endif %}</a></th>
+            <th>#  <a href="{% url 'shoppinglist:list' %}?sort={{ sort_toggle.id }}{% if current_buy_filter != 'all' %}&buy={{ current_buy_filter }}{% endif %}">{% if current_sort == "-id" %}🔽{% elif current_sort == "id" %}🔼{% else %}↕️{% endif %}</a></th>
+            <th>名前 <a href="{% url 'shoppinglist:list' %}?sort={{ sort_toggle.name }}{% if current_buy_filter != 'all' %}&buy={{ current_buy_filter }}{% endif %}">{% if current_sort == "-name" %}🔽{% elif current_sort == "name" %}🔼{% else %}↕️{% endif %}</a></th>
+            <th>個数 <a href="{% url 'shoppinglist:list' %}?sort={{ sort_toggle.count }}{% if current_buy_filter != 'all' %}&buy={{ current_buy_filter }}{% endif %}">{% if current_sort == "-count" %}🔽{% elif current_sort == "count" %}🔼{% else %}↕️{% endif %}</a></th>
+            <th>期日 <a href="{% url 'shoppinglist:list' %}?sort={{ sort_toggle.buy_date }}{% if current_buy_filter != 'all' %}&buy={{ current_buy_filter }}{% endif %}">{% if current_sort == "-buy_date" %}🔽{% elif current_sort == "buy_date" %}🔼{% else %}↕️{% endif %}</a></th>
             <th>購入済み?</th>
             <th>編集</th>
             <th>削除</th>
             <th>購入切り替え</th>
+            <th>外部リンク</th>
         </tr>
     </thead>
     <tbody>
@@ -54,6 +55,13 @@
                         <input type="hidden" name="buy" value="{% if item.buy %}False{% else %}True{% endif %}">
                         <input type="submit" value="{% if item.buy %}未済みにする{% else %}済みにする{% endif %}">
                     </form>
+                </td>
+                <td>
+                    {% if item.item_url %}
+                        <a href="{% url 'shoppinglist:url' item.pk %}">外部サイトへ</a>
+                    {% else %}
+                        なし
+                    {% endif %}
                 </td>
 
               

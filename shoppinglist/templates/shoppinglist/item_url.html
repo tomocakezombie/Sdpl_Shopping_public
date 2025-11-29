@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}外部サイト{% endblock %}
+
+{% block main %}
+{% csrf_token %}
+<a href="{% url 'shoppinglist:list' %}">一覧へ戻る</a>
+
+
+<h2> ここから先は外部サイトです </h2>
+<p> 発生したいかなる損害に関しても、本サイトでは一切の責任を負いません。</p>
+<p> 以下のリンクをクリックして外部サイトへ移動してください。</p>
+<a href="{{ item.item_url }}" target="_blank"> {{ item.item_url }}</a>
+
+{% endblock %}
