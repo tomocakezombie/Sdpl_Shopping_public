@@ -16,9 +16,10 @@
             <th>名前</th>
             <th>個数</th>
             <th>期日</th>
-            <th>済み?</th>
+            <th>購入済み?</th>
             <th>編集</th>
             <th>削除</th>
+            <th>購入切り替え</th>
         </tr>
     </thead>
     <tbody>
@@ -35,6 +36,14 @@
                 </td>
                 <td>
                     <a href="{% url 'shoppinglist:delete' item.pk %}" style="color:red;">削除</a>
+                </td>
+
+                <td>
+                    <form action="{% url 'shoppinglist:toggle_buy' item.pk %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="buy" value="{% if item.buy %}False{% else %}True{% endif %}">
+                        <input type="submit" value="{% if item.buy %}未済みにする{% else %}済みにする{% endif %}">
+                    </form>
                 </td>
 
               
