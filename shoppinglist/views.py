@@ -121,3 +121,13 @@ class ItemAddview(CreateView):
     template_name = "shoppinglist/item_add.html"
     success_url = reverse_lazy("shoppinglist:list")
 
+class ItemUrlView(TemplateView):
+    model = Item
+    template_name = 'shoppinglist/item_url.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        item_id = self.kwargs.get('pk')
+        item = get_object_or_404(Item, pk=item_id)
+        context['item'] = item
+        return context
