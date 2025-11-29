@@ -12,10 +12,10 @@
 <table class="table">
     <thead class="table-dark">
         <tr>
-            <th>#</th>
-            <th>名前</th>
-            <th>個数</th>
-            <th>期日</th>
+            <th>#  <a href="{% url 'shoppinglist:list' %}?sort={{ sort_toggle.id }}">{% if current_sort == "-id" %}🔽{% else %}🔼{% endif %}</a></th>
+            <th>名前 <a href="{% url 'shoppinglist:list' %}?sort={{ sort_toggle.name }}">{% if current_sort == "-name" %}🔽{% else %}🔼{% endif %}</a></th>
+            <th>個数 <a href="{% url 'shoppinglist:list' %}?sort={{ sort_toggle.count }}">{% if current_sort == "-count" %}🔽{% else %}🔼{% endif %}</a></th>
+            <th>期日 <a href="{% url 'shoppinglist:list' %}?sort={{ sort_toggle.buy_date }}">{% if current_sort == "-buy_date" %}🔽{% else %}🔼{% endif %}</a></th>
             <th>購入済み?</th>
             <th>編集</th>
             <th>削除</th>

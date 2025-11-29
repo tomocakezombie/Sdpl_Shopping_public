@@ -15,6 +15,8 @@ class ItemList(ListView):
     template_name = "shoppinglist/item_list.html"
     success_url = reverse_lazy("shoppinglist:list")
 
+    allowed_sort_fields = ["id", "name", "count", "buy_date", "buy"]
+
     def post(self, request, *args, **kwargs):
         item_id = request.POST.get('item_id')
         item_status = request.POST.get('item_status')
@@ -23,9 +25,38 @@ class ItemList(ListView):
         item.save()
         return HttpResponseRedirect(reverse('shoppinglist:list'))
     
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        sort_param = self.request.GET.get("sort")
+
+        if sort_param:
+            ordering = sort_param
+            if sort_param.startswith("-"):
+                field_name = sort_param[1:]
+            else:
+                field_name = sort_param
+
+            if field_name in self.allowed_sort_fields:
+                return queryset.order_by(ordering)
+
+        return queryset.order_by("id")
+    
     def get_context_data(self, **kwargs):
         context =  super().get_context_data(**kwargs)
         context['form'] = ItemBuy()
+        current_sort = self.request.GET.get("sort", "id")
+        context['current_sort'] = current_sort
+        sort_toggle = {}
+        for field in self.allowed_sort_fields:
+            sort_toggle[field] = field
+            if current_sort == field:
+                sort_toggle[field] = f"-{field}"
+            elif current_sort == f"-{field}":
+                sort_toggle[field] = field
+        context['sort_toggle'] = sort_toggle
         return context
 
 
