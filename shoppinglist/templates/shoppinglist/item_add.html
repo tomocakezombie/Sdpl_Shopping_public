@@ -3,6 +3,7 @@
 {%block title %} Add {% endblock %}
 
 {% block main %}
+<a href="{% url 'shoppinglist:list' %}">一覧へ戻る</a>
 <form action="{% url 'shoppinglist:add' %}" method="post">
     {% csrf_token %}
     <table>

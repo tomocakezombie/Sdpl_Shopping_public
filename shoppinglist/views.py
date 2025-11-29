@@ -5,7 +5,7 @@ from django.views.generic.edit import UpdateView  # T23CS044課題（改善ポ�
 from django.urls import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
 
-from .models import Item
+from .models import Item, Shop
 from .forms import ItemBuy, ItemForm, ItemIdForm
 
 
@@ -130,4 +130,21 @@ class ItemUrlView(TemplateView):
         item_id = self.kwargs.get('pk')
         item = get_object_or_404(Item, pk=item_id)
         context['item'] = item
+        return context
+    
+class ShopAddView(CreateView):
+    model = Shop
+    fields = ['name', 'shop_site']
+    template_name = "shoppinglist/shop_add.html"
+    success_url = reverse_lazy("shoppinglist:list")
+    
+class ShopUrlView(TemplateView):
+    model = Shop
+    template_name = 'shoppinglist/shop_url.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        shop_id = self.kwargs.get('pk')
+        shop = get_object_or_404(Shop, pk=shop_id)
+        context['shop'] = shop
         return context
