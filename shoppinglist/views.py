@@ -16,6 +16,12 @@ class ItemList(ListView):
     success_url = reverse_lazy("shoppinglist:list")
 
     allowed_sort_fields = ["id", "name", "count", "buy_date", "buy"]
+    buy_filter_map = {"true": True, "false": False}
+    buy_filter_options = (
+        ("all", "すべて"),
+        ("true", "購入済み"),
+        ("false", "未購入"),
+    )
 
     def post(self, request, *args, **kwargs):
         item_id = request.POST.get('item_id')
@@ -30,6 +36,11 @@ class ItemList(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
+        filter_param = self.request.GET.get("buy", "all")
+
+        if filter_param in self.buy_filter_map:
+            queryset = queryset.filter(buy=self.buy_filter_map[filter_param])
+
         sort_param = self.request.GET.get("sort")
 
         if sort_param:
@@ -49,6 +60,11 @@ class ItemList(ListView):
         context['form'] = ItemBuy()
         current_sort = self.request.GET.get("sort", "id")
         context['current_sort'] = current_sort
+        filter_param = self.request.GET.get("buy", "all")
+        if filter_param not in self.buy_filter_map and filter_param != "all":
+            filter_param = "all"
+        context['current_buy_filter'] = filter_param
+        context['buy_filter_options'] = self.buy_filter_options
         sort_toggle = {}
         for field in self.allowed_sort_fields:
             sort_toggle[field] = field
