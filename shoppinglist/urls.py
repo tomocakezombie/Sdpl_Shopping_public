@@ -8,6 +8,8 @@ from .views import (
     ItemShowView,
     ItemToggleBuyView,
     ItemUrlView,
+    ShopAddView,
+    ShopUrlView,
 )
 
 
@@ -20,5 +22,7 @@ urlpatterns = [
     path('add/', ItemAddview.as_view(), name='add'),
     path('toggle_buy/<int:pk>/', ItemToggleBuyView.as_view(), name='toggle_buy'),
     path('url/<int:pk>/', ItemUrlView.as_view(), name='url'),
+    path('shopadd/', ShopAddView.as_view(), name='shop_add'),
+    path('shopurl/<int:pk>/', ShopUrlView.as_view(), name='shop_url'),
     path('', ItemList.as_view(), name='list'),
 ]

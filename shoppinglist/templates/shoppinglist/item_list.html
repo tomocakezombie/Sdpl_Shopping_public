@@ -27,6 +27,7 @@
             <th>個数 <a href="{% url 'shoppinglist:list' %}?sort={{ sort_toggle.count }}{% if current_buy_filter != 'all' %}&buy={{ current_buy_filter }}{% endif %}">{% if current_sort == "-count" %}🔽{% elif current_sort == "count" %}🔼{% else %}↕️{% endif %}</a></th>
             <th>期日 <a href="{% url 'shoppinglist:list' %}?sort={{ sort_toggle.buy_date }}{% if current_buy_filter != 'all' %}&buy={{ current_buy_filter }}{% endif %}">{% if current_sort == "-buy_date" %}🔽{% elif current_sort == "buy_date" %}🔼{% else %}↕️{% endif %}</a></th>
             <th>購入済み?</th>
+            <th>ショップ</th>
             <th>編集</th>
             <th>削除</th>
             <th>購入切り替え</th>
@@ -41,6 +42,7 @@
                 <td>{{ item.count }}</td>
                 <td>{{ item.buy_date }}</td>
                 <td>{% if item.buy == False%} <font color='red'>Not yet</font> {%endif%}{% if item.buy == True %}Yet {% endif %} </td>
+                <td>{% if item.shop %}<a href="{% url 'shoppinglist:shop_url' item.shop.pk %}">{{ item.shop }}</a>{% else %}未登録{% endif %}</td>
 
                 <td>
                     <a href="{% url 'shoppinglist:edit' item.pk %}">変更</a>
@@ -63,13 +65,12 @@
                         なし
                     {% endif %}
                 </td>
-
-              
             </tr>
         {% endfor %}
     <tbody>
 </table>
 <ul>
+<li><a href="{% url 'shoppinglist:shop_add' %}">ショップ追加</a></li>
 <li><a href="{% url 'shoppinglist:add' %}">追加</a></li>
 <li><a href="{% url 'shoppinglist:show' %}">表示</a></li>
 {% comment %}<li><a href="{% url 'shoppinglist:edit' %}">変更</a></li>{% endcomment %}

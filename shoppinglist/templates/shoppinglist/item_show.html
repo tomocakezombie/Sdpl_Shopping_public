@@ -3,6 +3,7 @@
 {% block title %} 個別リスト {% endblock %}
     
 {%block main%}
+<a href="{% url 'shoppinglist:list' %}">一覧へ戻る</a>
 <form action="{% url 'shoppinglist:show' %}" method="post">
     {% csrf_token %}
     {{ form_id}}

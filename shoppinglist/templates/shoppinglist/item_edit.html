@@ -3,6 +3,7 @@
 {% block title %} Delete {% endblock %}
 
 {% block main %}
+<a href="{% url 'shoppinglist:list' %}">一覧へ戻る</a>
 <form action="{% url 'shoppinglist:edit' pk=item.id %}" method="post">
 {% csrf_token %}
 {{ form }}

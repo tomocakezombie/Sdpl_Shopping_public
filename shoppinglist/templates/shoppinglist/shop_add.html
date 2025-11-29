@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}ショップ追加{% endblock %}
+
+{% block main %}
+<a href="{% url 'shoppinglist:list' %}">一覧へ戻る</a>
+<form action="{% url 'shoppinglist:shop_add' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">追加</button>
+</form>
+
+{% endblock %}
