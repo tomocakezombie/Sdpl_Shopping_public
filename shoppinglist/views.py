@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, redirect
 from django.views import View
 from django.views.generic import ListView, TemplateView, CreateView, DeleteView
@@ -10,10 +11,11 @@ from .forms import ItemBuy, ItemForm, ItemIdForm
 
 
 
-class ItemList(ListView):
+class ItemList(LoginRequiredMixin, ListView):
     model = Item
     template_name = "shoppinglist/item_list.html"
     success_url = reverse_lazy("shoppinglist:list")
+    login_url = reverse_lazy("accounts:login")
 
     allowed_sort_fields = ["id", "name", "count", "buy_date", "buy"]
     buy_filter_map = {"true": True, "false": False}
@@ -76,7 +78,9 @@ class ItemList(ListView):
         return context
 
 
-class ItemToggleBuyView(View):
+class ItemToggleBuyView(LoginRequiredMixin, View):
+    login_url = reverse_lazy("accounts:login")
+
     def post(self, request, pk):
         item = get_object_or_404(Item, pk=pk)
         buy_value = request.POST.get("buy")
@@ -85,9 +89,10 @@ class ItemToggleBuyView(View):
         return redirect("shoppinglist:list")
 
     
-class ItemShowView(TemplateView):
+class ItemShowView(LoginRequiredMixin, TemplateView):
     model = Item
     template_name = 'shoppinglist/item_show.html'
+    login_url = reverse_lazy("accounts:login")
     
     def post(self, request, *args, **kwargs):
         item_id = self.request.POST.get('item_id')
@@ -103,27 +108,31 @@ class ItemShowView(TemplateView):
         context['form_id'] = ItemIdForm()
         return context
 
-class ItemEditView(UpdateView):#T23CS044課題（改善ポイント2）
+class ItemEditView(LoginRequiredMixin, UpdateView):#T23CS044課題（改善ポイント2）
     model = Item
     fields = ['name','item_url','count','buy_date','buy']
     template_name = 'shoppinglist/item_edit.html'
     success_url = reverse_lazy('shoppinglist:list')
+    login_url = reverse_lazy("accounts:login")
     
-class ItemDeleteView(DeleteView):
+class ItemDeleteView(LoginRequiredMixin, DeleteView):
     model = Item
     template_name = 'shoppinglist/item_delete.html'
     success_url = reverse_lazy('shoppinglist:list') 
+    login_url = reverse_lazy("accounts:login")
 
-class ItemAddview(CreateView):
+class ItemAddview(LoginRequiredMixin, CreateView):
     model = Item
 
     fields = ['name', 'item_url', 'count', 'buy_date', 'shop']
     template_name = "shoppinglist/item_add.html"
     success_url = reverse_lazy("shoppinglist:list")
+    login_url = reverse_lazy("accounts:login")
 
-class ItemUrlView(TemplateView):
+class ItemUrlView(LoginRequiredMixin, TemplateView):
     model = Item
     template_name = 'shoppinglist/item_url.html'
+    login_url = reverse_lazy("accounts:login")
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -132,11 +141,12 @@ class ItemUrlView(TemplateView):
         context['item'] = item
         return context
     
-class ShopAddView(CreateView):
+class ShopAddView(LoginRequiredMixin, CreateView):
     model = Shop
     fields = ['name', 'shop_site']
     template_name = "shoppinglist/shop_add.html"
     success_url = reverse_lazy("shoppinglist:list")
+    login_url = reverse_lazy("accounts:login")
     
 class ShopUrlView(TemplateView):
     model = Shop

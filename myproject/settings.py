@@ -38,7 +38,13 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "shoppinglist.apps.ShoppinglistConfig",
+    "accounts.apps.AccountsConfig",
 ]
+
+# カスタムユーザーを認証ユーザーとして利用
+AUTH_USER_MODEL = "accounts.User"
+LOGIN_REDIRECT_URL = "shoppinglist:list"  # ログイン後のリダイレクト先
+LOGOUT_REDIRECT_URL = "accounts:index"  # ログアウト後のリダイレクト先
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -127,3 +133,6 @@ STATICFILES_DIRS = (
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+LOGIN_URL = "accounts:login"
+LOGIN_REDIRECT_URL = "shoppinglist:list"
