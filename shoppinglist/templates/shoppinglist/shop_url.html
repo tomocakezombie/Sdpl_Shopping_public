@@ -1,5 +1,17 @@
 {% extends "base.html" %}
 
+{% block title %}ショップ詳細{% endblock %}
+
+{% block main %}
+<a href="{% url 'shoppinglist:list' %}">一覧へ戻る</a>
+<h2>{{ shop.name }}</h2>
+{% if shop.shop_site %}
+    <p><a href="{{ shop.shop_site }}" target="_blank" rel="noopener noreferrer">ショップサイトへ</a></p>
+{% else %}
+    <p>登録されたサイトはありません。</p>
+{% endif %}
+{% endblock %}{% extends "base.html" %}
+
 {% block title %}外部サイト{% endblock %}
 
 {% block main %}
