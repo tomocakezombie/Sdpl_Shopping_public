@@ -3,22 +3,11 @@
 {% block title %}Delete{% endblock %}
 
 {% block main %}
-
-<h2>削除確認</h2>
-
-<p>以下の内容を本当に削除しますか？</p>
-
-<div style="border: 1px solid #ddd; padding: 15px; margin-bottom: 20px;">
-    <p>ID: {{ object.id }}</p>
-    <p>名前: {{ object.name }}</p>
-    <p>個数: {{ object.count }}</p>
-    <p>期日: {{ object.buy_date }}</p>
-</div>
-
-<form action="" method="post">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-danger">削除する</button>
-    <a href="{% url 'shoppinglist:list' %}" class="btn btn-secondary">キャンセル</a>
+<form action="{% url 'shoppinglist:delete' pk=item.id %}" method="post"> 
+{% csrf_token %}
+<p> {{item.id}} {{item.name}} を削除しますか？ </p>
+{{ form }}
+<input type="submit"/>
 </form>
 
 {% endblock %}
