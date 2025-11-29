@@ -41,7 +41,8 @@ class ItemShowView(TemplateView):
     
     def post(self, request, *args, **kwargs):
         item_id = self.request.POST.get('item_id')
-        item = Item.objects.get(pk=item_id)
+        item = get_object_or_404(Item, pk=item_id)
+        print('item:id=', item.id)
         context = super().get_context_data(**kwargs)
         context['form_id'] = ItemIdForm()
         context['item'] = item
@@ -58,48 +59,12 @@ class ItemEditView(UpdateView):#T23CS044課題（改善ポイント2）
     fields = ['name','item_url','count','buy_date','buy']
     template_name = 'shoppinglist/item_edit.html'
     success_url = reverse_lazy('shoppinglist:list')
-
-# class ItemEditView(TemplateView):
-#     model =Itemtemplete_name ='dhoppinglist/item_edit.html'
-#     success_url = 'list/'
     
-#     def post(self, request, *arg, **kwargs):
-#         item_id = self.request.POST.get('item_id')
-#         name = self.request.POST.get('name')
-#         count = self.request.POST.get('count')
-#         buy_date =self.request.POST.get('buy_date')
-        
-#         item = get_object_or_404(Item, pk=item_id)
-#         item.name = name
-#         item.count = count
-#         item.buy_date = buy_date
-#         item.save()
-#         return HttpResponseRedirect(reverse('shoppinglist:list'))
-#     def get_context_date(self, **kwargs):
-#         context =super().get_context_data(**kwargs)
-#         context['form_id'] = ItemIDForm()
-#         context['form'] = ItemForm()
-#         return context
-
-    
-# class ItemDeleteView(TemplateView):
-#     model = Item
-#     template_name = 'shoppinglist/item_delete.html'
-    
-#     def post(self, request, *args, **kwargs):
-#         item_id = self.request.POST.get('item_id')
-#         item = get_object_or_404(Item, pk=item_id)
-#         item.delete()
-#         return HttpResponseRedirect(reverse('shoppinglist:list'))
-    
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['form'] = ItemIdForm()
-#         return context
 class ItemDeleteView(DeleteView):
     model = Item
     template_name = 'shoppinglist/item_delete.html'
     success_url = reverse_lazy('shoppinglist:list') 
+
       
 class ItemAddview(CreateView):
     model = Item
